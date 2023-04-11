@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/library
+    username: avalc
+    password: 123
+    tomcat:
+      initial-size: 15
+      max-wait: 20000
+      max-active: 50
+      max-idle: 15
+      min-idle: 8
+      default-auto-commit: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    properties:
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        format_sql: true
+    show-sql: true
+
+logging:
+  pattern:
+    file: "%d{HH:mm:ss} %-5p [%c] - %m%n"
+  level:
+    ROOT: error
+    org.springframework: warn
+    javax.faces: warn
+    org.omnifaces: warn
+    org.springframework.security: warn
+    org.hibernate: warn
+    org.hibernate.type.descriptor.sql: warn
+  file:
+    name: C:\Users\avalc\Desktop\Java\javabegin\library\temp\app.log
