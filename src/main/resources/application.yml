@@ -18,8 +18,11 @@ spring:
       hibernate:
         current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        ddl-auto: false
         format_sql: true
     show-sql: true
+    hibernate:
+      ddl-auto: none
 
 logging:
   pattern:

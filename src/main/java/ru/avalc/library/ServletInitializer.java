@@ -1,13 +1,11 @@
 package ru.avalc.library;
 
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+@SpringBootApplication(scanBasePackages = {"ru.avalc.library"})
+@EnableAspectJAutoProxy
 public class ServletInitializer extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(LibraryApplication.class);
-    }
 
 }
