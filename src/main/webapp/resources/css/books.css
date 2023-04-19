@@ -1,7 +1,9 @@
 
 body {
+    font-family: Arial;
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     background-color: #f0f0f0 !important;
+    padding-top: 0;
 }
 
 .slide-image {
@@ -22,7 +24,7 @@ body {
     overflow: hidden;
 }
 
-#booksList{
+#booksList {
     margin: 5px;
 }
 
@@ -48,7 +50,7 @@ img.see-count {
     color: #d17581;
 }
 
-.add-info{
+.add-info {
     height: 20px;
     width: 150px;
 }
@@ -62,25 +64,25 @@ img.see-count {
     float: left;
 }
 
-.ava-form .ui-state-error{
+.ava-form .ui-state-error {
     color: rgb(51, 51, 51) !important;
 }
 
-.ui-messages-error, .ui-message-error{
+.ui-messages-error, .ui-message-error {
     background-color: transparent !important;
-    color:#ff5304 !important;
-    border:0 !important;
-    font-size:15px !important;
-    font-weight:normal !important;
+    color: #ff5304 !important;
+    border: 0 !important;
+    font-size: 15px !important;
+    font-weight: normal !important;
     line-height: 20px !important;
 }
 
 .ui-tooltip {
     max-width: 400px;
-    white-space:pre-wrap;
+    white-space: pre-wrap;
 }
 
-.ui-rating{
+.ui-rating {
     width: 200px;
 }
 
@@ -142,18 +144,17 @@ span.ui-icon {
 
 }
 
-.navbar-nav{
-    height: 50px!important;;
+.navbar-nav {
+    height: 50px !important;;
 }
 
-.book-icon img{
+.book-icon img {
     vertical-align: top;
 }
 
 .book-info {
     width: 100%;
-    padding: 10px;
-    padding-top: 5px;
+    padding: 5px 10px 10px;
 }
 
 .author {
@@ -169,8 +170,8 @@ span.ui-icon {
     color: #696969;
 }
 
-.ui-paginator select{
-    width:50px !important;
+.ui-paginator select {
+    width: 50px !important;
 }
 
 .box {
@@ -214,6 +215,7 @@ span.ui-icon {
 .box-product li {
     display: block;
     float: none;
+    padding: 0;
     list-style: none;
     min-height: 300px;
     width: auto;
@@ -246,6 +248,7 @@ span.ui-icon {
     min-height: 301px;
     padding: 0;
     margin: 0 0 0 0;
+    position: relative;
     z-index: 1;
 }
 
@@ -378,7 +381,7 @@ img.edit-icon {
 .lang-link {
     margin: 5px;
     padding: 5px;
-    color:#a0a0a0;
+    color: #a0a0a0;
     font-size: 14px !important;
 }
 
@@ -415,7 +418,7 @@ a label {
     cursor: pointer;
 }
 
-.navbar-fixed-top{
+.navbar-fixed-top {
     z-index: 100 !important;
 }
 
@@ -476,20 +479,21 @@ input.search {
     font-weight: normal !important;
 }
 
-.ui-growl-item{
+.ui-growl-item {
     z-index: 1000;
 
 }
 
-/*button.search-button{*/
-/*position:relative;*/
-/*padding:6px 15px;*/
-/*left:-8px;*/
-/*border:2px solid #207cca;*/
-/*background-color:#207cca;*/
-/*color:#fafafa;*/
-/*}*/
-/*.search .button:hover  {*/
-/*background-color:#fafafa;*/
-/*color:#207cca;*/
-/*}*/
+button.search-button {
+    position: relative;
+    padding: 6px 15px;
+    left: -8px;
+    border: 2px solid #207cca;
+    background-color: #207cca;
+    color: #fafafa;
+}
+
+.search .button:hover {
+    background-color: #fafafa;
+    color: #207cca;
+}
