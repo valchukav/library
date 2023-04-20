@@ -9,7 +9,13 @@ import java.io.Serializable;
  * @author Alexei Valchuk, 18.04.2023, email: a.valchukav@gmail.com
  */
 
-public abstract class AbstractController <T> implements Serializable {
+public abstract class AbstractController<T> implements Serializable {
 
     public abstract Page<T> search(int pageNumber, int pageSize, String sortField, Sort.Direction sortDirection);
+
+    public abstract void addAction();
+
+    public abstract void editAction();
+
+    public abstract void deleteAction();
 }

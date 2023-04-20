@@ -1,4 +1,4 @@
-package ru.avalc.library;
+package ru.avalc.library.spring.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

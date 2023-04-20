@@ -24,9 +24,9 @@
                                 <p:inputText style="margin-right: 10px" placeholder="#{msg.search}"
                                              value="#{bookController.searchText}" styleClass="search"/>
                                 <p:commandButton styleClass="search-button" value="search" process="@form"
-                                    update="@([id=$booksList])"
-                                    actionListener="#{bookController.searchAction()}"
-                                    style="visibility: hidden"/>
+                                                 update="@([id=$booksList])"
+                                                 actionListener="#{bookController.searchAction()}"
+                                                 style="visibility: hidden"/>
                             </h:form>
                         </div>
                         <ui:include src="../parts/logout.xhtml"/>

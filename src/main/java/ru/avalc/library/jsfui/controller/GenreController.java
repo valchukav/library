@@ -3,6 +3,7 @@ package ru.avalc.library.jsfui.controller;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -30,7 +31,9 @@ public class GenreController extends AbstractController<Genre> {
 
     private int rowsCount = 20;
     private int first;
+
     private final GenreDao genreDao;
+
     private Genre selectedGenre;
     private LazyDataTable<Genre> lazyModel;
     private Page<Genre> genrePages;
@@ -45,9 +48,33 @@ public class GenreController extends AbstractController<Genre> {
         lazyModel = new LazyDataTable<>(this);
     }
 
+    public List<Genre> find(String name) {
+        return genreDao.search(name);
+    }
+
+    public void save() {
+        genreDao.save(selectedGenre);
+        PrimeFaces.current().executeScript("PF('dialogGenre').hide()");
+    }
+
     @Override
     public Page<Genre> search(int pageNumber, int pageSize, String sortField, Sort.Direction sortDirection) {
         return genrePages;
+    }
+
+    @Override
+    public void addAction() {
+
+    }
+
+    @Override
+    public void editAction() {
+
+    }
+
+    @Override
+    public void deleteAction() {
+
     }
 
     public List<Genre> getAll() {

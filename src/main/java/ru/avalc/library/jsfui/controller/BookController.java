@@ -3,6 +3,9 @@ package ru.avalc.library.jsfui.controller;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.CloseEvent;
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -34,15 +37,19 @@ public class BookController extends AbstractController<Book> {
 
     public static final int DEFAULT_PAGE_SIZE = 20;
     public static final int TOP_BOOKS_LIMIT = 5;
-
     private int rowsCount = DEFAULT_PAGE_SIZE;
-    private SearchType searchType = SearchType.ALL;
-    private String searchText;
+
     private final BookDao bookDao;
     private final GenreDao genreDao;
+
+    private SearchType searchType = SearchType.ALL;
+    private String searchText;
+    private long selectedGenreId;
+    private byte[] uploadedContent;
+    private byte[] uploadedImage;
     private LazyDataTable<Book> lazyModel;
     private Page<Book> bookPages;
-    private long selectedGenreId;
+    private Book selectedBook;
 
     @Autowired
     public BookController(BookDao bookDao, GenreDao genreDao) {
@@ -53,6 +60,19 @@ public class BookController extends AbstractController<Book> {
     @PostConstruct
     public void init() {
         lazyModel = new LazyDataTable<>(this);
+    }
+
+    public void save() {
+        if (uploadedImage != null) {
+            selectedBook.setImage(uploadedImage);
+        }
+
+        if (uploadedContent != null) {
+            selectedBook.setContent(uploadedContent);
+        }
+
+        bookDao.save(selectedBook);
+        PrimeFaces.current().executeScript("PF('dialogEditBook').hide()");
     }
 
     @Override
@@ -73,6 +93,26 @@ public class BookController extends AbstractController<Book> {
             }
         }
         return bookPages;
+    }
+
+    public void onCloseDialog(CloseEvent event) {
+        uploadedContent = null;
+    }
+
+    @Override
+    public void addAction() {
+
+    }
+
+    @Override
+    public void editAction() {
+        uploadedImage = selectedBook.getImage();
+        PrimeFaces.current().executeScript("PF('dialogEditBook').show()");
+    }
+
+    @Override
+    public void deleteAction() {
+
     }
 
     public List<Book> getTopBooks() {
@@ -108,5 +148,31 @@ public class BookController extends AbstractController<Book> {
                 message = bundle.getString("search") + ": '" + searchText + "'";
         }
         return message;
+    }
+
+    public byte[] getContent(long id) {
+        byte[] content;
+        if (uploadedContent != null) {
+            content = uploadedContent;
+        } else {
+            content = bookDao.getContent(id);
+        }
+        return content;
+    }
+
+    public void updateViewCount(long viewCount, long id) {
+        bookDao.updateViewCount(++viewCount, id);
+    }
+
+    public void uploadImage(FileUploadEvent event) {
+        if (event.getFile() != null) {
+            uploadedImage = event.getFile().getContent();
+        }
+    }
+
+    public void uploadContent(FileUploadEvent event) {
+        if (event.getFile() != null) {
+            uploadedContent = event.getFile().getContent();
+        }
     }
 }

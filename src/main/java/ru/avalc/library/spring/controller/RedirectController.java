@@ -1,4 +1,4 @@
-package ru.avalc.library.controller;
+package ru.avalc.library.spring.controller;
 
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;

@@ -10,6 +10,9 @@
 <h:body>
     <ui:composition template="/templates/books/books-template.xhtml">
         <ui:define name="content">
+
+            <ui:include src="/templates/dialogs/edit-dialog.xhtml"/>
+
             <h:form id="booksForm">
                 <p:dataGrid id="booksList" var="book" value="#{bookController.lazyModel}" columns="5"
                             paginatorPosition="bottom"
@@ -36,7 +39,12 @@
 
                         <!--обложка книги-->
                         <div class="book-icon">
-                            <o:graphicImage cache="false" name="images/no-cover.jpg"/>
+                            <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank"
+                                          styleClass="read-link">
+                                <f:param name="id" value="#{book.id}"/>
+                                <f:param name="viewCount" value="#{book.viewCount}"/>
+                                <o:graphicImage cache="false" name="images/no-cover.jpg"/>
+                            </h:outputLink>
                         </div>
 
                         <!--описание книги-->
@@ -72,7 +80,10 @@
                                 <o:graphicImage name="images/delete.png" styleClass="delete-icon" dataURI="true"/>
                             </p:commandLink>
 
-                            <p:commandLink title="#{msg.edit}">
+                            <p:commandLink title="#{msg.edit}" action="#{bookController.editAction()}"
+                                           update="@([id$=dialogEditBook])">
+                                <f:setPropertyActionListener value="#{book}"
+                                                             target="#{bookController.selectedBook}"/>
                                 <o:graphicImage name="images/edit.png" styleClass="edit-icon" dataURI="true"/>
                             </p:commandLink>
                         </p:outputPanel>
