@@ -2,13 +2,9 @@ package ru.avalc.library.dao.service;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.avalc.library.domain.Author;
 import ru.avalc.library.domain.Book;
 import ru.avalc.library.domain.Genre;
@@ -24,13 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Alexei Valchuk, 13.04.2023, email: a.valchukav@gmail.com
  */
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@Sql(scripts = "classpath:data.sql")
-class BookServiceTest {
+class BookServiceTest extends AbstractServiceTest<BookService>{
 
     @Autowired
-    private BookService service;
+    public BookServiceTest(BookService service) {
+        super(service);
+    }
 
     @Test
     void findTopBooks() {
@@ -127,6 +122,7 @@ class BookServiceTest {
         assertEquals("Собачья смерть", all.get().findFirst().get().getName());
     }
 
+    @Override
     @Test
     void get() {
         Book book = service.get(1105);

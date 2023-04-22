@@ -1,13 +1,9 @@
 package ru.avalc.library.dao.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.avalc.library.domain.Genre;
 
 import java.util.List;
@@ -18,13 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Alexei Valchuk, 17.04.2023, email: a.valchukav@gmail.com
  */
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@Sql(scripts = "classpath:data.sql")
-class GenreServiceTest {
+class GenreServiceTest extends AbstractServiceTest<GenreService>{
 
     @Autowired
-    private GenreService service;
+    public GenreServiceTest(GenreService service) {
+        super(service);
+    }
 
     @Test
     void getAll() {
@@ -52,6 +47,7 @@ class GenreServiceTest {
         assertEquals("Бизнес", all.get().findFirst().get().getName());
     }
 
+    @Override
     @Test
     void get() {
         Genre genre = service.get(121);
