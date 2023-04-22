@@ -4,7 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
 >
 
 <h:body>
@@ -43,7 +45,7 @@
                                           styleClass="read-link">
                                 <f:param name="id" value="#{book.id}"/>
                                 <f:param name="viewCount" value="#{book.viewCount}"/>
-                                <o:graphicImage cache="false" name="images/no-cover.jpg"/>
+                                <o:graphicImage cache="false" value="#{images.get(book.imagePath)}" dataURI="true"/>
                             </h:outputLink>
                         </div>
 

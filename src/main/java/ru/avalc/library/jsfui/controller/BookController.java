@@ -2,8 +2,9 @@ package ru.avalc.library.jsfui.controller;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.java.Log;
-import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,10 @@ import ru.avalc.library.jsfui.model.LazyDataTable;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Alexei Valchuk, 18.04.2023, email: a.valchukav@gmail.com
@@ -45,11 +48,14 @@ public class BookController extends AbstractController<Book> {
     private SearchType searchType = SearchType.ALL;
     private String searchText;
     private long selectedGenreId;
+
+    private Book selectedBook;
     private byte[] uploadedContent;
-    private byte[] uploadedImage;
+    private String uploadedImagePath;
+
     private LazyDataTable<Book> lazyModel;
     private Page<Book> bookPages;
-    private Book selectedBook;
+
 
     @Autowired
     public BookController(BookDao bookDao, GenreDao genreDao) {
@@ -63,8 +69,13 @@ public class BookController extends AbstractController<Book> {
     }
 
     public void save() {
-        if (uploadedImage != null) {
-            selectedBook.setImage(uploadedImage);
+        if (uploadedImagePath != null) {
+            String currentImagePath = selectedBook.getImagePath();
+            selectedBook.setImagePath(uploadedImagePath);
+            if (!currentImagePath.equals("images/covers/no-cover.jpg")) {
+                File oldFile = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + currentImagePath);
+                oldFile.delete();
+            }
         }
 
         if (uploadedContent != null) {
@@ -72,7 +83,7 @@ public class BookController extends AbstractController<Book> {
         }
 
         bookDao.save(selectedBook);
-        PrimeFaces.current().executeScript("PF('dialogEditBook').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialogEditBook').hide()");
     }
 
     @Override
@@ -97,6 +108,7 @@ public class BookController extends AbstractController<Book> {
 
     public void onCloseDialog(CloseEvent event) {
         uploadedContent = null;
+        uploadedImagePath = null;
     }
 
     @Override
@@ -104,10 +116,10 @@ public class BookController extends AbstractController<Book> {
 
     }
 
+    @SneakyThrows
     @Override
     public void editAction() {
-        uploadedImage = selectedBook.getImage();
-        PrimeFaces.current().executeScript("PF('dialogEditBook').show()");
+        RequestContext.getCurrentInstance().execute("PF('dialogEditBook').show()");
     }
 
     @Override
@@ -164,15 +176,25 @@ public class BookController extends AbstractController<Book> {
         bookDao.updateViewCount(++viewCount, id);
     }
 
+    @SneakyThrows
     public void uploadImage(FileUploadEvent event) {
         if (event.getFile() != null) {
-            uploadedImage = event.getFile().getContent();
+            String uploadedFileName = event.getFile().getFileName();
+            uploadedImagePath = "images/covers/" + UUID.randomUUID() + uploadedFileName.substring(uploadedFileName.lastIndexOf("."));
+
+            File fileOnServer = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + uploadedImagePath);
+            if (fileOnServer.createNewFile()) {
+                try (FileOutputStream fileOutputStream = new FileOutputStream(fileOnServer)) {
+                    event.getFile().getInputstream().transferTo(fileOutputStream);
+                    fileOutputStream.flush();
+                }
+            }
         }
     }
 
     public void uploadContent(FileUploadEvent event) {
         if (event.getFile() != null) {
-            uploadedContent = event.getFile().getContent();
+            uploadedContent = event.getFile().getContents();
         }
     }
 }

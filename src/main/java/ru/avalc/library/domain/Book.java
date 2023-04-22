@@ -25,14 +25,14 @@ import java.util.Objects;
 @ToString(includeFieldNames = false)
 public class Book {
 
-    public Book(Long id, byte[] image) {
+    public Book(Long id, String imagePath) {
         this.id = id;
-        this.image = image;
+        this.imagePath = imagePath;
     }
 
     public Book(Long id, @NonNull String name, @NonNull Integer pageCount, @NonNull String isbn,
                 @NonNull Genre genre, @NonNull Author author, @NonNull Publisher publisher,
-                @NonNull Integer publishYear, byte[] image, String descr, long viewCount, long totalRating,
+                @NonNull Integer publishYear, String imagePath, String descr, long viewCount, long totalRating,
                 long totalVoteCount, int avgRating) {
         this.id = id;
         this.name = name;
@@ -42,7 +42,7 @@ public class Book {
         this.author = author;
         this.publisher = publisher;
         this.publishYear = publishYear;
-        this.image = image;
+        this.imagePath = imagePath;
         this.descr = descr;
         this.viewCount = viewCount;
         this.totalRating = totalRating;
@@ -93,8 +93,8 @@ public class Book {
     @NonNull
     private Integer publishYear;
 
-    @ToString.Exclude
-    private byte[] image;
+    @Column(name = "image_path")
+    private String imagePath;
 
     @ToString.Exclude
     private String descr;

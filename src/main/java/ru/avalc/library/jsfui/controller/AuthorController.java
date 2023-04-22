@@ -3,7 +3,7 @@ package ru.avalc.library.jsfui.controller;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
-import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -51,7 +51,7 @@ public class AuthorController extends AbstractController<Author> {
 
     public void save() {
         authorDao.save(selectedAuthor);
-        PrimeFaces.current().executeScript("PF('dialogAuthor').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialogAuthor').hide()");
     }
 
     @Override
@@ -76,7 +76,7 @@ public class AuthorController extends AbstractController<Author> {
     }
 
     private void showEditDialog() {
-        PrimeFaces.current().executeScript("PF('dialogAuthor').show()");
+        RequestContext.getCurrentInstance().execute("PF('dialogAuthor').show()");
     }
 
     public List<Author> find(String fio) {

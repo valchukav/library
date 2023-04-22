@@ -1,7 +1,6 @@
 package ru.avalc.library.spring.config;
 
 import org.primefaces.webapp.filter.FileUploadFilter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -12,13 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import ru.avalc.library.jsfui.servlets.PdfContent;
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.MultipartConfigElement;
-import javax.servlet.annotation.MultipartConfig;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"ru.avalc.library.spring", "ru.avalc.library.dao", "ru.avalc.library.jsfui"})
@@ -38,7 +34,6 @@ public class ServletInitializer extends SpringBootServletInitializer {
             servletContext.setInitParameter("primefaces.CLIENT_SIDE_VALIDATION", "true");
             servletContext.setInitParameter("primefaces.THEME", "bootstrap");
             servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
-            servletContext.setInitParameter("primefaces.UPLOADER", "commons");
             servletContext.setInitParameter("primefaces.UPLOADER", "commons");
         };
     }

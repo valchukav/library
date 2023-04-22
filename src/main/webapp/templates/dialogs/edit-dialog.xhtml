@@ -22,18 +22,16 @@
                 <div class="avatar-box">
 
                     <!-- загрузка обложки книги -->
-                    <o:graphicImage width="240" height="320" cache="false" value="#{bookController.uploadedImage}"
-                                    rendered="#{not empty bookController.uploadedImage}" id="bookImage"
-                                    dataURI="true"/>
+                    <o:graphicImage width="240" height="320" cache="false" value="#{images.get(bookController.selectedBook.imagePath)}"
+                                    rendered="#{bookController.selectedBook != null}"
+                                    id="bookImage"/>
 
                     <p:fileUpload id="imageUpload" fileUploadListener="#{bookController.uploadImage}"
-                                  enctype="multipart/form-data"
                                   mode="advanced"
                                   auto="true"
                                   dragDropSupport="true" label="#{msg.image_load}"
                                   update="image_upload_messages @([id$=imageUpload])" sizeLimit="1000000"
                                   allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
-
                     <p:growl id="image_upload_messages" showDetail="true"/>
 
                     <!-- показывает все сообщения об ошибках при редактировании -->

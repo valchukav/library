@@ -10,6 +10,7 @@ import ru.avalc.library.dao.BookDao;
 import ru.avalc.library.domain.Book;
 import ru.avalc.library.repository.BookRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class BookService implements BookDao {
+public class BookService implements BookDao, Serializable {
 
     private final BookRepository bookRepository;
 

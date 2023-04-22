@@ -3,7 +3,7 @@ package ru.avalc.library.jsfui.controller;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
-import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -54,7 +54,7 @@ public class GenreController extends AbstractController<Genre> {
 
     public void save() {
         genreDao.save(selectedGenre);
-        PrimeFaces.current().executeScript("PF('dialogGenre').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialogGenre').hide()");
     }
 
     @Override
