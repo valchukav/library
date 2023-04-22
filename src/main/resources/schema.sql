@@ -27,7 +27,7 @@ CREATE TABLE book
 (
     id               serial PRIMARY KEY,
     name             varchar(256)       NOT NULL,
-    content          bytea,
+    content_path          varchar(512),
     page_count       int                NOT NULL,
     isbn             varchar(64) UNIQUE NOT NULL,
     genre_id         bigint             NOT NULL,

@@ -1,4 +1,4 @@
-package ru.avalc.library.jsfui.controller;
+package ru.avalc.library.jsfui.controller.util;
 
 import lombok.SneakyThrows;
 import org.omnifaces.cdi.GraphicImageBean;

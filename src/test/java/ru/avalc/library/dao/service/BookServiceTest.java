@@ -38,12 +38,6 @@ class BookServiceTest extends AbstractServiceTest<BookService>{
     }
 
     @Test
-    @Disabled
-    void getContent() {
-
-    }
-
-    @Test
     void findByGenre() {
         int pageSize = 3;
         Page<Book> books = service.findByGenre(0, pageSize, "name", Sort.Direction.ASC, 124L);

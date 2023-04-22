@@ -34,11 +34,6 @@ public class BookService implements BookDao, Serializable {
     }
 
     @Override
-    public byte[] getContent(long id) {
-        return bookRepository.getContent(id);
-    }
-
-    @Override
     public Page<Book> findByGenre(int pageNumber, int pageSize, String sortField, Sort.Direction sortDirection, Long genreId) {
         return bookRepository.findByGenre(genreId, PageRequest.of(pageNumber, pageSize, Sort.by(new Sort.Order(sortDirection, sortField))));
     }
@@ -75,11 +70,7 @@ public class BookService implements BookDao, Serializable {
 
     @Override
     public Book save(Book obj) {
-        bookRepository.save(obj);
-        if (obj.getContent() != null) {
-            bookRepository.updateContent(obj.getContent(), obj.getId());
-        }
-        return obj;
+        return bookRepository.save(obj);
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import ru.avalc.library.dao.BookDao;
 import ru.avalc.library.dao.GenreDao;
 import ru.avalc.library.domain.Book;
+import ru.avalc.library.jsfui.controller.util.Contents;
 import ru.avalc.library.jsfui.enums.SearchType;
 import ru.avalc.library.jsfui.model.LazyDataTable;
 
@@ -23,8 +24,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Alexei Valchuk, 18.04.2023, email: a.valchukav@gmail.com
@@ -44,6 +45,7 @@ public class BookController extends AbstractController<Book> {
 
     private final BookDao bookDao;
     private final GenreDao genreDao;
+    private final Contents contents;
 
     private SearchType searchType = SearchType.ALL;
     private String searchText;
@@ -51,6 +53,7 @@ public class BookController extends AbstractController<Book> {
 
     private Book selectedBook;
     private byte[] uploadedContent;
+    private String uploadedContentPath;
     private String uploadedImagePath;
 
     private LazyDataTable<Book> lazyModel;
@@ -58,9 +61,10 @@ public class BookController extends AbstractController<Book> {
 
 
     @Autowired
-    public BookController(BookDao bookDao, GenreDao genreDao) {
+    public BookController(BookDao bookDao, GenreDao genreDao, Contents contents) {
         this.bookDao = bookDao;
         this.genreDao = genreDao;
+        this.contents = contents;
     }
 
     @PostConstruct
@@ -79,7 +83,10 @@ public class BookController extends AbstractController<Book> {
         }
 
         if (uploadedContent != null) {
-            selectedBook.setContent(uploadedContent);
+            String currentContentPath = selectedBook.getContentPath();
+            selectedBook.setContentPath(uploadedContentPath);
+            File oldFile = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + currentContentPath);
+            oldFile.delete();
         }
 
         bookDao.save(selectedBook);
@@ -162,12 +169,16 @@ public class BookController extends AbstractController<Book> {
         return message;
     }
 
+    @SneakyThrows
     public byte[] getContent(long id) {
         byte[] content;
         if (uploadedContent != null) {
             content = uploadedContent;
         } else {
-            content = bookDao.getContent(id);
+            String contentPath = bookPages.stream().filter(book -> book.getId() == id).findFirst().orElse(bookDao.get(id)).getContentPath();
+            if (contentPath != null) {
+                content = contents.get(contentPath).readAllBytes();
+            } else content = null;
         }
         return content;
     }
@@ -179,22 +190,33 @@ public class BookController extends AbstractController<Book> {
     @SneakyThrows
     public void uploadImage(FileUploadEvent event) {
         if (event.getFile() != null) {
-            String uploadedFileName = event.getFile().getFileName();
-            uploadedImagePath = "images/covers/" + UUID.randomUUID() + uploadedFileName.substring(uploadedFileName.lastIndexOf("."));
-
-            File fileOnServer = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + uploadedImagePath);
-            if (fileOnServer.createNewFile()) {
-                try (FileOutputStream fileOutputStream = new FileOutputStream(fileOnServer)) {
-                    event.getFile().getInputstream().transferTo(fileOutputStream);
-                    fileOutputStream.flush();
-                }
-            }
+            uploadedImagePath = createFile(event, "images/covers/");
         }
     }
 
+    @SneakyThrows
     public void uploadContent(FileUploadEvent event) {
         if (event.getFile() != null) {
             uploadedContent = event.getFile().getContents();
+            uploadedContentPath = createFile(event, "pdf/");
         }
+    }
+
+    /**
+     * @return path of uploaded file: suffix from "../resources/"
+     */
+    private String createFile(FileUploadEvent event, String pathPrefix) throws IOException {
+        String uploadedFileName = event.getFile().getFileName();
+        String path = pathPrefix + UUID.randomUUID() + uploadedFileName.substring(uploadedFileName.lastIndexOf("."));
+
+        File fileOnServer = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + path);
+        if (fileOnServer.createNewFile()) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(fileOnServer)) {
+                event.getFile().getInputstream().transferTo(fileOutputStream);
+                fileOutputStream.flush();
+            }
+        }
+
+        return path;
     }
 }

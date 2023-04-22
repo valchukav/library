@@ -30,26 +30,6 @@ public class Book {
         this.imagePath = imagePath;
     }
 
-    public Book(Long id, @NonNull String name, @NonNull Integer pageCount, @NonNull String isbn,
-                @NonNull Genre genre, @NonNull Author author, @NonNull Publisher publisher,
-                @NonNull Integer publishYear, String imagePath, String descr, long viewCount, long totalRating,
-                long totalVoteCount, int avgRating) {
-        this.id = id;
-        this.name = name;
-        this.pageCount = pageCount;
-        this.isbn = isbn;
-        this.genre = genre;
-        this.author = author;
-        this.publisher = publisher;
-        this.publishYear = publishYear;
-        this.imagePath = imagePath;
-        this.descr = descr;
-        this.viewCount = viewCount;
-        this.totalRating = totalRating;
-        this.totalVoteCount = totalVoteCount;
-        this.avgRating = avgRating;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,10 +38,8 @@ public class Book {
     @NonNull
     private String name;
 
-    @Lob
-    @Column(updatable = false)
-    @ToString.Exclude
-    private byte[] content;
+    @Column(name = "content_path")
+    private String contentPath;
 
     @Column(name = "page_count", nullable = false)
     @NonNull
