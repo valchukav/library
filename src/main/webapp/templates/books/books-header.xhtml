@@ -2,9 +2,11 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:o="http://omnifaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://java.sun.com/jsf/html">
+      xmlns:o="http://omnifaces.org/ui">
 <f:view>
     <div class="header-div">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -15,6 +17,22 @@
                             <ui:fragment>
                                 <li><o:graphicImage name="images/books.png" style="height:50px; padding:10px;"
                                                     dataURI="true"/></li>
+                            </ui:fragment>
+                            <ui:fragment>
+                                <li>
+                                    <h:outputLink
+                                            value="#{request.contextPath}/pages/spr.xhtml"> #{msg.dict}</h:outputLink>
+                                </li>
+                            </ui:fragment>
+                            <ui:fragment>
+                                <li class="colored">
+                                    <p:commandLink title="Add button"
+                                                   actionListener="#{bookController.addAction()}"
+                                                   update="@([id$=dialogEditBook])"
+                                                   styleClass="new-book-item">
+                                        <p:outputLabel value="#{msg.add_book}" styleClass="new-book-label"/>
+                                    </p:commandLink>
+                                </li>
                             </ui:fragment>
                         </ul>
                     </div>
@@ -36,5 +54,17 @@
             </div>
         </nav>
     </div>
+
+    <p:ajaxStatus id="ajaxStatusPanel">
+        <f:facet name="start">
+            <div id="loading_wrapper">
+                <p>#{msg.loading}...</p>
+            </div>
+        </f:facet>
+
+        <f:facet name="complete">
+            <h:outputText value=""/>
+        </f:facet>
+    </p:ajaxStatus>
 </f:view>
 </html>

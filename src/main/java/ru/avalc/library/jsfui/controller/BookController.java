@@ -7,6 +7,7 @@ import lombok.extern.java.Log;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -76,7 +77,7 @@ public class BookController extends AbstractController<Book> {
         if (uploadedImagePath != null) {
             String currentImagePath = selectedBook.getImagePath();
             selectedBook.setImagePath(uploadedImagePath);
-            if (!currentImagePath.equals("images/covers/no-cover.jpg")) {
+            if (currentImagePath != null && !currentImagePath.equals("images/covers/no-cover.jpg")) {
                 File oldFile = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + currentImagePath);
                 oldFile.delete();
             }
@@ -120,7 +121,10 @@ public class BookController extends AbstractController<Book> {
 
     @Override
     public void addAction() {
-
+        selectedBook = new Book();
+        uploadedContent = null;
+        uploadedImagePath = null;
+        RequestContext.getCurrentInstance().execute("PF('dialogEditBook').show()");
     }
 
     @SneakyThrows
@@ -200,6 +204,23 @@ public class BookController extends AbstractController<Book> {
             uploadedContent = event.getFile().getContents();
             uploadedContentPath = createFile(event, "pdf/");
         }
+    }
+
+    public void onRate(RateEvent rateEvent) {
+        Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        int bookIndex = Integer.parseInt(map.get("bookIndex"));
+        Book book = bookPages.getContent().get(bookIndex);
+        long newRating = book.getTotalRating() + Long.parseLong(rateEvent.getRating().toString());
+        long newVoteCount = book.getTotalVoteCount() + 1;
+        bookDao.updateRating(newRating, newVoteCount, calcAverageRating(newRating, newVoteCount), book.getId());
+    }
+
+    private int calcAverageRating(long totalRating, long totalVoteCount) {
+        if (totalRating == 0 || totalVoteCount == 0) {
+            return 0;
+        }
+
+        return Long.valueOf(totalRating/totalVoteCount).intValue();
     }
 
     /**

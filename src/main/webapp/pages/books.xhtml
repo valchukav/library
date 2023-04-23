@@ -70,8 +70,13 @@
 
                                 <!--голосование-->
                                 <div style="width:60%; float:right;">
-                                    <p:rating id="rating" value="#{book.avgRating}" styleClass="rating" cancel="false"
+                                    <p:rating id="rating" value="#{book.avgRating}" styleClass="rating"
+                                              cancel="false"
                                               stars="5">
+                                        <p:ajax event="rate" listener="#{bookController.onRate}"
+                                                update="@([id$=booksList])"
+                                                onsuccess="alert('#{msg.thanks}')"/>
+                                        <f:param name="bookIndex" value="#{rowIndexVar}"/>
                                     </p:rating>
                                 </div>
                             </div>
