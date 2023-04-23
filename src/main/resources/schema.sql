@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS genre CASCADE;
 DROP TABLE IF EXISTS publisher CASCADE;
 DROP TABLE IF EXISTS vote CASCADE;
 DROP TABLE IF EXISTS book CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS user_roles CASCADE;
 
 CREATE TABLE author
 (
@@ -52,4 +54,20 @@ CREATE TABLE vote
     book_id  bigint       NOT NULL,
     username varchar(128) NOT NULL,
     CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+CREATE TABLE users
+(
+    id              serial PRIMARY KEY,
+    username        varchar(64) UNIQUE,
+    password        varchar(256),
+    enabled         boolean DEFAULT true
+);
+
+CREATE TABLE user_roles
+(
+    id       serial PRIMARY KEY,
+    username varchar(64) REFERENCES users (username) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    role     varchar(64),
+    CONSTRAINT username_role_unique UNIQUE (username, role)
 );
