@@ -14,6 +14,7 @@
         <ui:define name="content">
 
             <ui:include src="/templates/dialogs/edit-dialog.xhtml"/>
+            <ui:include src="/templates/dialogs/confirm-dialog.xhtml"/>
 
             <h:form id="booksForm">
                 <p:dataGrid id="booksList" var="book" value="#{bookController.lazyModel}" columns="5"
@@ -78,7 +79,11 @@
 
                         <!--инструменты администратора (редактирование, удаление)-->
                         <p:outputPanel layout="block" styleClass="admin-region">
-                            <p:commandLink title="#{msg.delete}">
+
+                            <p:commandLink title="#{msg.delete}" action="#{bookController.deleteAction()}"
+                                           update=":booksForm:booksList">
+                                <p:confirm header="#{msg.confirm}" message="#{msg.prompt_delete}" icon="ui-icon-alert"/>
+                                <f:setPropertyActionListener value="#{book}" target="#{bookController.selectedBook}"/>
                                 <o:graphicImage name="images/delete.png" styleClass="delete-icon" dataURI="true"/>
                             </p:commandLink>
 

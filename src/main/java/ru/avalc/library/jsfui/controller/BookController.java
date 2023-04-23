@@ -131,7 +131,7 @@ public class BookController extends AbstractController<Book> {
 
     @Override
     public void deleteAction() {
-
+        bookDao.delete(selectedBook);
     }
 
     public List<Book> getTopBooks() {
