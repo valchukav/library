@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import ru.avalc.library.dao.PublisherDao;
 import ru.avalc.library.domain.Publisher;
+import ru.avalc.library.jsfui.controller.util.CommonSearch;
 import ru.avalc.library.jsfui.model.LazyDataTable;
 
 import javax.annotation.ManagedBean;
@@ -33,14 +34,16 @@ public class PublisherController extends AbstractController<Publisher> {
     private int first;
 
     private final PublisherDao publisherDao;
+    private final SprController sprController;
 
     private Page<Publisher> publisherPages;
     private Publisher selectedPublisher;
     private LazyDataTable<Publisher> lazyModel;
 
     @Autowired
-    public PublisherController(PublisherDao publisherDao) {
+    public PublisherController(PublisherDao publisherDao, SprController sprController) {
         this.publisherDao = publisherDao;
+        this.sprController = sprController;
     }
 
     @PostConstruct
@@ -55,7 +58,7 @@ public class PublisherController extends AbstractController<Publisher> {
 
     @Override
     public Page<Publisher> search(int pageNumber, int pageSize, String sortField, Sort.Direction sortDirection) {
-        return publisherPages;
+        return CommonSearch.search(sprController, "name", publisherPages, publisherDao, pageNumber, pageSize, sortField, sortDirection);
     }
 
     @Override

@@ -25,7 +25,6 @@ import java.util.Objects;
 @DynamicUpdate
 @DynamicInsert
 @SelectBeforeUpdate
-@ToString(includeFieldNames = false)
 public class Author {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +40,6 @@ public class Author {
     private Date birthday;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    @ToString.Exclude
     private List<Book> books;
 
     @Override
@@ -55,5 +53,10 @@ public class Author {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return fio;
     }
 }

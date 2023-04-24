@@ -3,23 +3,21 @@ package ru.avalc.library.jsfui.locale;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 import ru.avalc.library.jsfui.util.CookieHelper;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
+import javax.annotation.ManagedBean;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Alexei Valchuk, 24.04.2023, email: a.valchukav@gmail.com
  */
 
-@ManagedBean(eager = true)
+@ManagedBean
 @Component
-@SessionScoped
+@SessionScope
 @Getter
-public class LocaleChanger implements Serializable {
+public class LocaleChanger {
 
     private Locale currentLocale = new Locale("ru");
 

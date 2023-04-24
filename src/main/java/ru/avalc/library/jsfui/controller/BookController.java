@@ -124,13 +124,13 @@ public class BookController extends AbstractController<Book> {
         selectedBook = new Book();
         uploadedContent = null;
         uploadedImagePath = null;
-        RequestContext.getCurrentInstance().execute("PF('dialogEditBook').show()");
+        showEditDialog();
     }
 
     @SneakyThrows
     @Override
     public void editAction() {
-        RequestContext.getCurrentInstance().execute("PF('dialogEditBook').show()");
+        showEditDialog();
     }
 
     @Override
@@ -239,5 +239,9 @@ public class BookController extends AbstractController<Book> {
         }
 
         return path;
+    }
+
+    private void showEditDialog() {
+        RequestContext.getCurrentInstance().execute("PF('dialogEditBook').show()");
     }
 }

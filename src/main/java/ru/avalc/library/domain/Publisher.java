@@ -23,7 +23,6 @@ import java.util.Objects;
 @DynamicUpdate
 @DynamicInsert
 @SelectBeforeUpdate
-@ToString(includeFieldNames = false)
 public class Publisher {
 
     @Id
@@ -35,7 +34,6 @@ public class Publisher {
     private String name;
 
     @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
-    @ToString.Exclude
     private List<Book> books;
 
     @Override
@@ -49,5 +47,10 @@ public class Publisher {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
