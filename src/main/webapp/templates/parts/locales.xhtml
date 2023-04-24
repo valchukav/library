@@ -9,8 +9,8 @@
     <div class="lang">
         <h:form>
             <div class="lang">
-                <h:commandLink value="#{msg.ru}" styleClass="lang-link"/>
-                <h:commandLink value="#{msg.en}" styleClass="lang-link"/>
+                <h:commandLink  actionListener="#{localeChanger.changeLocale('ru')}" value="#{msg.ru}" styleClass="#{localeChanger.currentLocale == 'ru' ? 'active':''} lang-link"/>
+                <h:commandLink  actionListener="#{localeChanger.changeLocale('en')}" value="#{msg.en}" styleClass="#{localeChanger.currentLocale == 'en' ? 'active':''} lang-link"/>
             </div>
         </h:form>
     </div>

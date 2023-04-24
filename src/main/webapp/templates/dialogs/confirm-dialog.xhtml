@@ -7,7 +7,7 @@
 
 >
 <!-- диалоговое окно для подтверждения действий (удаления) -->
-<f:view>
+<f:view locale="#{localeChanger.currentLocale}">
 
     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
         <p:commandButton value="#{msg.yes}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
