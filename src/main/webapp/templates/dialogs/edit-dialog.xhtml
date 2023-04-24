@@ -22,7 +22,8 @@
                 <div class="avatar-box">
 
                     <!-- загрузка обложки книги -->
-                    <o:graphicImage width="240" height="320" cache="false" value="#{images.get(bookController.selectedBook.imagePath)}"
+                    <o:graphicImage width="240" height="320" cache="false"
+                                    value="#{images.get(bookController.selectedBook.imagePath)}"
                                     rendered="#{bookController.selectedBook != null}"
                                     id="bookImage"/>
 

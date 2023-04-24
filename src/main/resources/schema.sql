@@ -58,10 +58,10 @@ CREATE TABLE vote
 
 CREATE TABLE users
 (
-    id              serial PRIMARY KEY,
-    username        varchar(64) UNIQUE,
-    password        varchar(256),
-    enabled         boolean DEFAULT true
+    id       serial PRIMARY KEY,
+    username varchar(64) UNIQUE,
+    password varchar(256),
+    enabled  boolean DEFAULT true
 );
 
 CREATE TABLE user_roles

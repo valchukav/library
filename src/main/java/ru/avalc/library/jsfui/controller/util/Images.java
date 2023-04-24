@@ -20,6 +20,6 @@ public class Images {
     @SneakyThrows
     public InputStream get(String imagePath) {
         File file = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + imagePath);
-        return file.exists()? new FileInputStream(file) : Faces.getResourceAsStream("/resources/images/covers/no-cover.jpg");
+        return file.exists() ? new FileInputStream(file) : Faces.getResourceAsStream("/resources/images/covers/no-cover.jpg");
     }
 }

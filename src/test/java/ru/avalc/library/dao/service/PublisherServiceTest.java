@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Alexei Valchuk, 17.04.2023, email: a.valchukav@gmail.com
  */
 
-class PublisherServiceTest extends AbstractServiceTest<PublisherService>{
+class PublisherServiceTest extends AbstractServiceTest<PublisherService> {
 
     @Autowired
     public PublisherServiceTest(PublisherService service) {

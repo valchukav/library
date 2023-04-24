@@ -1,6 +1,5 @@
 package ru.avalc.library.dao.service;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Alexei Valchuk, 13.04.2023, email: a.valchukav@gmail.com
  */
 
-class BookServiceTest extends AbstractServiceTest<BookService>{
+class BookServiceTest extends AbstractServiceTest<BookService> {
 
     @Autowired
     public BookServiceTest(BookService service) {

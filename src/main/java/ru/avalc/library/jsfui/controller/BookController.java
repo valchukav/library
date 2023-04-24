@@ -26,7 +26,10 @@ import javax.faces.context.FacesContext;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
 /**
  * @author Alexei Valchuk, 18.04.2023, email: a.valchukav@gmail.com
@@ -220,7 +223,7 @@ public class BookController extends AbstractController<Book> {
             return 0;
         }
 
-        return Long.valueOf(totalRating/totalVoteCount).intValue();
+        return Long.valueOf(totalRating / totalVoteCount).intValue();
     }
 
     /**

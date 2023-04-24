@@ -12,7 +12,7 @@
     <f:loadBundle var="msgs" basename="library"/>
     <h:outputStylesheet name="css/books.css"/>
     <h:outputStylesheet name="css/footer.css"/>
-    <h:outputStylesheet name="css/dialog.css" />
+    <h:outputStylesheet name="css/dialog.css"/>
 
     <title>${msg.online_library}</title>
 
@@ -21,7 +21,7 @@
 <f:view transient="true" locale="#{localeChanger.currentLocale}">
     <ui:include src="spr-header.xhtml"/>
     <b:container>
-        <p:growl id="info" globalOnly="true"  showSummary="false" showDetail="true" life="4000" />
+        <p:growl id="info" globalOnly="true" showSummary="false" showDetail="true" life="4000"/>
         <b:row>
             <ui:insert name="content"/>
         </b:row>

@@ -83,7 +83,8 @@
                         </div>
 
                         <!--инструменты администратора (редактирование, удаление)-->
-                        <p:outputPanel layout="block" styleClass="admin-region" rendered="#{userController.hasRole('ADMIN')}">
+                        <p:outputPanel layout="block" styleClass="admin-region"
+                                       rendered="#{userController.hasRole('ADMIN')}">
 
                             <p:commandLink title="#{msg.delete}" action="#{bookController.deleteAction()}"
                                            update=":booksForm:booksList">

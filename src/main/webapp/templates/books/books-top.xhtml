@@ -20,11 +20,14 @@
                                         <div class="featuredIndent">
                                             <div class="product_image_container">
                                                 <div class="product_image_shadow">
-                                                    <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank"
+                                                    <h:outputLink value="#{request.contextPath}/PdfContent"
+                                                                  target="_blank"
                                                                   styleClass="read-link">
                                                         <f:param name="id" value="#{book.id}"/>
                                                         <f:param name="viewCount" value="#{book.viewCount}"/>
-                                                        <o:graphicImage cache="false" value="#{images.get(book.imagePath)}" dataURI="true"/>
+                                                        <o:graphicImage cache="false"
+                                                                        value="#{images.get(book.imagePath)}"
+                                                                        dataURI="true"/>
                                                     </h:outputLink>
                                                 </div>
                                             </div>

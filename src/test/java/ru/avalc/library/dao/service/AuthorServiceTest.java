@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Alexei Valchuk, 12.04.2023, email: a.valchukav@gmail.com
  */
 
-class AuthorServiceTest extends AbstractServiceTest<AuthorService>{
+class AuthorServiceTest extends AbstractServiceTest<AuthorService> {
 
     @Autowired
     public AuthorServiceTest(AuthorService service) {

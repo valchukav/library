@@ -17,6 +17,6 @@ public class Contents {
     @SneakyThrows
     public InputStream get(String contentPath) {
         File file = new File("C:/Users/avalc/Desktop/Java/javabegin/library/src/main/webapp/resources/" + contentPath);
-        return file.exists()? new FileInputStream(file) : null;
+        return file.exists() ? new FileInputStream(file) : null;
     }
 }
