@@ -35,5 +35,6 @@ logging:
     org.springframework.security: warn
     org.hibernate: warn
     org.hibernate.type.descriptor.sql: warn
+    org.jboss.weld.*: warn
   file:
     name: C:\Users\avalc\Desktop\Java\javabegin\library\temp\app.log

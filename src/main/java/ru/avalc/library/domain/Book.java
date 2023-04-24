@@ -25,29 +25,9 @@ import java.util.Objects;
 @ToString(includeFieldNames = false)
 public class Book {
 
-    public Book(Long id, byte[] image) {
+    public Book(Long id, String imagePath) {
         this.id = id;
-        this.image = image;
-    }
-
-    public Book(Long id, @NonNull String name, @NonNull Integer pageCount, @NonNull String isbn,
-                @NonNull Genre genre, @NonNull Author author, @NonNull Publisher publisher,
-                @NonNull Integer publishYear, byte[] image, String descr, long viewCount, long totalRating,
-                long totalVoteCount, int avgRating) {
-        this.id = id;
-        this.name = name;
-        this.pageCount = pageCount;
-        this.isbn = isbn;
-        this.genre = genre;
-        this.author = author;
-        this.publisher = publisher;
-        this.publishYear = publishYear;
-        this.image = image;
-        this.descr = descr;
-        this.viewCount = viewCount;
-        this.totalRating = totalRating;
-        this.totalVoteCount = totalVoteCount;
-        this.avgRating = avgRating;
+        this.imagePath = imagePath;
     }
 
     @Id
@@ -58,10 +38,8 @@ public class Book {
     @NonNull
     private String name;
 
-    @Lob
-    @Column(updatable = false)
-    @ToString.Exclude
-    private byte[] content;
+    @Column(name = "content_path")
+    private String contentPath;
 
     @Column(name = "page_count", nullable = false)
     @NonNull
@@ -93,8 +71,8 @@ public class Book {
     @NonNull
     private Integer publishYear;
 
-    @ToString.Exclude
-    private byte[] image;
+    @Column(name = "image_path")
+    private String imagePath;
 
     @ToString.Exclude
     private String descr;

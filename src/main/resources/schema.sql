@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS genre CASCADE;
 DROP TABLE IF EXISTS publisher CASCADE;
 DROP TABLE IF EXISTS vote CASCADE;
 DROP TABLE IF EXISTS book CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS user_roles CASCADE;
 
 CREATE TABLE author
 (
@@ -27,19 +29,19 @@ CREATE TABLE book
 (
     id               serial PRIMARY KEY,
     name             varchar(256)       NOT NULL,
-    content          bytea,
+    content_path     varchar(512),
     page_count       int                NOT NULL,
     isbn             varchar(64) UNIQUE NOT NULL,
     genre_id         bigint             NOT NULL,
     author_id        bigint             NOT NULL,
     publish_year     int                NOT NULL,
     publisher_id     bigint             NOT NULL,
-    image            bytea,
-    avg_rating       int    DEFAULT 0,
-    total_vote_count bigint DEFAULT 0,
-    total_rating     bigint DEFAULT 0,
-    view_count       bigint DEFAULT 0,
-    descr            text   DEFAULT NULL,
+    image_path       varchar(512) DEFAULT 'images/covers/no-cover.jpg',
+    avg_rating       int          DEFAULT 0,
+    total_vote_count bigint       DEFAULT 0,
+    total_rating     bigint       DEFAULT 0,
+    view_count       bigint       DEFAULT 0,
+    descr            text         DEFAULT NULL,
     CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES author (id) ON UPDATE CASCADE,
     CONSTRAINT fk_genre FOREIGN KEY (genre_id) REFERENCES genre (id) ON UPDATE CASCADE,
     CONSTRAINT fk_publisher FOREIGN KEY (publisher_id) REFERENCES publisher (id) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -52,4 +54,20 @@ CREATE TABLE vote
     book_id  bigint       NOT NULL,
     username varchar(128) NOT NULL,
     CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+CREATE TABLE users
+(
+    id       serial PRIMARY KEY,
+    username varchar(64) UNIQUE,
+    password varchar(256),
+    enabled  boolean DEFAULT true
+);
+
+CREATE TABLE user_roles
+(
+    id       serial PRIMARY KEY,
+    username varchar(64) REFERENCES users (username) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    role     varchar(64),
+    CONSTRAINT username_role_unique UNIQUE (username, role)
 );

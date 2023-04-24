@@ -10,6 +10,7 @@ import ru.avalc.library.dao.PublisherDao;
 import ru.avalc.library.domain.Publisher;
 import ru.avalc.library.repository.PublisherRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PublisherService implements PublisherDao {
+public class PublisherService implements PublisherDao, Serializable {
 
     private final PublisherRepository publisherRepository;
 

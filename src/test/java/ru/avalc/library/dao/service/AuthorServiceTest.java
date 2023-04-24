@@ -1,13 +1,9 @@
 package ru.avalc.library.dao.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.avalc.library.domain.Author;
 
 import java.util.Date;
@@ -19,13 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Alexei Valchuk, 12.04.2023, email: a.valchukav@gmail.com
  */
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@Sql(scripts = "classpath:data.sql")
-class AuthorServiceTest {
+class AuthorServiceTest extends AbstractServiceTest<AuthorService> {
 
     @Autowired
-    private AuthorService service;
+    public AuthorServiceTest(AuthorService service) {
+        super(service);
+    }
 
     @Test
     void getAll() {
@@ -53,6 +48,7 @@ class AuthorServiceTest {
         assertEquals("Борис Акунин", all.get().findFirst().get().getFio());
     }
 
+    @Override
     @Test
     void get() {
         Author author = service.get(101);

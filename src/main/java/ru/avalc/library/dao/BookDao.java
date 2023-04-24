@@ -14,8 +14,6 @@ public interface BookDao extends Dao<Book> {
 
     List<Book> findTopBooks(int limit);
 
-    byte[] getContent(long id);
-
     Page<Book> findByGenre(int pageNumber, int pageSize, String sortField, Sort.Direction sortDirection, Long genreId);
 
     void updateViewCount(long viewCount, long id);

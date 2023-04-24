@@ -23,7 +23,6 @@ import java.util.Objects;
 @DynamicUpdate
 @DynamicInsert
 @SelectBeforeUpdate
-@ToString(includeFieldNames = false)
 public class Genre {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +34,6 @@ public class Genre {
     private String name;
 
     @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
-    @ToString.Exclude
     private List<Book> books;
 
     @Override
@@ -49,5 +47,10 @@ public class Genre {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

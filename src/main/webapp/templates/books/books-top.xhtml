@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+>
+<f:view>
+    <div class="box">
+        <div class="main2">
+            <div class="module-specials">
+                <div class="boxIndent">
+                    <ul class="box-product">
+                        <li>
+                            <h:form>
+                                <p:repeat value="#{bookController.topBooks}" var="book">
+                                    <div class="row-product">
+                                        <div class="featuredIndent">
+                                            <div class="product_image_container">
+                                                <div class="product_image_shadow">
+                                                    <h:outputLink value="#{request.contextPath}/PdfContent"
+                                                                  target="_blank"
+                                                                  styleClass="read-link">
+                                                        <f:param name="id" value="#{book.id}"/>
+                                                        <f:param name="viewCount" value="#{book.viewCount}"/>
+                                                        <o:graphicImage cache="false"
+                                                                        value="#{images.get(book.imagePath)}"
+                                                                        dataURI="true"/>
+                                                    </h:outputLink>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:repeat>
+                            </h:form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:view>
+</html>

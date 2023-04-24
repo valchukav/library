@@ -10,6 +10,7 @@ import ru.avalc.library.dao.GenreDao;
 import ru.avalc.library.domain.Genre;
 import ru.avalc.library.repository.GenreRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class GenreService implements GenreDao {
+public class GenreService implements GenreDao, Serializable {
 
     private final GenreRepository genreRepository;
 

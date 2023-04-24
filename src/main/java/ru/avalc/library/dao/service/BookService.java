@@ -10,6 +10,7 @@ import ru.avalc.library.dao.BookDao;
 import ru.avalc.library.domain.Book;
 import ru.avalc.library.repository.BookRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class BookService implements BookDao {
+public class BookService implements BookDao, Serializable {
 
     private final BookRepository bookRepository;
 
@@ -30,11 +31,6 @@ public class BookService implements BookDao {
     @Override
     public List<Book> findTopBooks(int limit) {
         return bookRepository.findTopBooks(PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "viewCount")));
-    }
-
-    @Override
-    public byte[] getContent(long id) {
-        return bookRepository.getContent(id);
     }
 
     @Override
@@ -74,11 +70,7 @@ public class BookService implements BookDao {
 
     @Override
     public Book save(Book obj) {
-        bookRepository.save(obj);
-        if (obj.getContent() != null) {
-            bookRepository.updateContent(obj.getContent(), obj.getId());
-        }
-        return obj;
+        return bookRepository.save(obj);
     }
 
     @Override

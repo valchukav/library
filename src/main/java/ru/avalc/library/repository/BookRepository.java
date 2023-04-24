@@ -20,23 +20,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Page<Book> findByNameContainingIgnoreCaseOrAuthorFioContainingIgnoreCaseOrderByName(String name, String fio, Pageable pageable);
 
-    @Query("select new ru.avalc.library.domain.Book(b.id, b.name, b.pageCount, b.isbn, b.genre, b.author, b.publisher, " +
-            "b.publishYear, b.image, b.descr, b.viewCount, b.totalRating, b.totalVoteCount, b.avgRating) from Book b")
-    Page<Book> findAllWithoutContent(Pageable pageable);
-
-    @Modifying(clearAutomatically = true)
-    @Query("update Book b set b.content=:content where b.id=:id")
-    void updateContent(@Param("content") byte[] content, @Param("id") long id);
-
-    @Query("select new ru.avalc.library.domain.Book(b.id, b.image) from Book b")
+    @Query("select new ru.avalc.library.domain.Book(b.id, b.imagePath) from Book b")
     List<Book> findTopBooks(Pageable pageable);
 
-    @Query("select new ru.avalc.library.domain.Book(b.id, b.name, b.pageCount, b.isbn, b.genre, b.author, b.publisher, " +
-            "b.publishYear, b.image, b.descr, b.viewCount, b.totalRating, b.totalVoteCount, b.avgRating) from Book b where b.genre.id=:genreId")
+    @Query("select new ru.avalc.library.domain.Book(b.id, b.name, b.contentPath, b.pageCount, b.isbn, b.genre, b.author, b.publisher, " +
+            "b.publishYear, b.imagePath, b.descr, b.viewCount, b.totalRating, b.totalVoteCount, b.avgRating) from Book b where b.genre.id=:genreId")
     Page<Book> findByGenre(@Param("genreId") long genreId, Pageable pageable);
-
-    @Query("select b.content from Book b where b.id=:id")
-    byte[] getContent(@Param("id") Long id);
 
     @Modifying
     @Query("update Book b set b.viewCount=:viewCount where b.id=:id")
